@@ -34,45 +34,8 @@ All characters in words[i] and order are English lowercase letters.
 """
 
 class Solution:
-    def validIPAddress(self, IP: str) -> str:
-        if len(IP.split('.')) == 4:
-            return 'IPv4' if all([True if x.isdigit() 
-                                  and 255 >= int(x) >=0 
-                                  and len(x) == len(str(int(x))) 
-                                  else False 
-                                  for x in IP.split('.')]) else 'Neither'
-        elif len(IP.split(':')) == 8:
-            import string
-            return 'IPv6' if all([True if 0 < len(x) <= 4 
-                                  and all(c in string.hexdigits for c in x)
-                                  else False 
-                                  for x in IP.split(':')]) else 'Neither'
-        return 'Neither'
-        
-        
-class Solution(object):
-    def validIPAddress(self, IP):
-        ip_list = IP.split(".")
-        if len(ip_list) == 4:
-            for group in ip_list:
-                try:
-                    n = int(group)
-                    if n < 0 or n > 255 or len(str(n)) != len(group):
-                        return "Neither"
-                except:
-                    return "Neither"
-            return "IPv4"
-            
-        ip_list = IP.split(":")
-        if len(ip_list) != 8:
-            return "Neither"
-        
-        for group in ip_list:
-            try:
-                n = int(group, 16)
-                if n < 0 or n > int("FFFF", 16) or len(group) > 4 or group[0] == "-":
-                    return "Neither"
-            except:
-                return "Neither"
-        
-        return "IPv6"
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        o = {c:i for i,c in enumerate(order)}
+        return words == sorted(words, key=lambda s: [o[c] for c in s])
+    
+    
