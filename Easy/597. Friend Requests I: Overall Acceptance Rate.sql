@@ -59,3 +59,17 @@ left join
  group by requester_id , accepter_id
 ) a
 on r.sender_id = a.requester_id and r.send_to_id = a.accepter_id ;
+
+
+select case when b.rcount is null or b.rcount = 0 then 0
+        else round(a.acount/b.rcount,2) end accept_rate
+from
+(
+    select count(distinct requester_id || accepter_id) acount 
+    from request_accepted
+) a,
+(
+    select count(distinct sender_id || send_to_id) rcount 
+    from friend_request
+) b
+where 1=1
